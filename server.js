@@ -25,7 +25,7 @@ mongodb.initDb((err) => {
         app.listen(port, () => { console.log(`Database is listening and node running on port ${port}`); });
         app
             .use(session({
-                secret: process.env.SESSION_SECRET || 'idontknow',
+                secret: process.env.SESSION_SECRET || 'wysiwyg',
                 resave: false,
                 saveUninitialized: false,
                 store: MongoStore.create({ client: mongodb.getDatabase() }),
