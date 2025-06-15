@@ -3,13 +3,13 @@ const router = express.Router();
 const ensureAuth = require('../auth/ensureAuth');
 
 const castController = require('../controllers/cast');
-const { castValidationRules, validate } = require('../validator');
+const { castValidation, validate } = require('../validator');
 
 router.get('/', castController.getCast);
-router.get('/:id', castController.getCastMember);
+router.get('/:id', castController.getCast);
 
-router.post('/', ensureAuth, castValidationRules(), validate, castController.createCastMember);
-router.put('/:id', ensureAuth, castValidationRules(), validate, castController.updateCastMember);
-router.delete('/:id', ensureAuth, castController.deleteCastMember);
+router.post('/', ensureAuth, castValidation(), validate, castController.createCast);
+router.put('/:id', ensureAuth, castValidation(), validate, castController.updateCast);
+router.delete('/:id', ensureAuth, castController.deleteCast);
 
 module.exports = router;

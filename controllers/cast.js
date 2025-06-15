@@ -2,17 +2,6 @@ const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 const getCast = async (req, res) => {
-    //#swagger.tags = ['Cast']
-    //#swagger.description = 'Get all cast'
-    try {
-        const result = await mongodb.getDatabase().db().collection('cast').find();
-        result.toArray().then((cast) => res.status(200).json(cast));
-    } catch (error) {
-        res.status(500).json({ error });
-    }
-};
-
-const getDirector = async (req, res) => {
     /*
     #swagger.tags = ['Cast']
     #swagger.description = 'Get a cast by ID'
@@ -27,7 +16,7 @@ const getDirector = async (req, res) => {
     }
 };
 
-const createDirector = async (req, res) => {
+const createCast = async (req, res) => {
     /*
     #swagger.tags = ['Cast']
     #swagger.description = 'Create a new cast'
@@ -54,7 +43,7 @@ const createDirector = async (req, res) => {
     }
 };
 
-const updateDirector = async (req, res) => {
+const updateCast = async (req, res) => {
     /*
     #swagger.tags = ['Cast']
     #swagger.description = 'Update a cast by ID'
@@ -83,7 +72,7 @@ const updateDirector = async (req, res) => {
     }
 };
 
-const deleteDirector = async (req, res) => {
+const deleteCast = async (req, res) => {
     /*
     #swagger.tags = ['Cast']
     #swagger.description = 'Delete a cast by ID'
@@ -100,8 +89,7 @@ const deleteDirector = async (req, res) => {
 
 module.exports = {
     getCast,
-    getDirector,
-    createDirector,
-    updateDirector,
-    deleteDirector
+    createCast,
+    updateCast,
+    deleteCast
 };

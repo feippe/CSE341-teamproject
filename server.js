@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const mongodb = require('./data/database');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -49,7 +52,7 @@ mongodb.initDb((err) => {
             .use('/', require('./routes'))
             .use(cors({
                 origin: isProduction
-                    ? 'https://songs-5tbl.onrender.com'
+                    ? 'https://cse341-teamproject-b6j0.onrender.com'
                     : 'http://localhost:3000',
                 credentials: true
             }))
