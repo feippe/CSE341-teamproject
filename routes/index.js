@@ -14,14 +14,6 @@ router.use('/cast', require('./cast'));
 
 router.use('/auth', /* #swagger.ignore = true */ require('./auth'));
 
-router.get('/profile', ensureAuth, (req, res) => {
-    //#swagger.tags = ['Profile']
-    //#swagger.ignore = true
-    if (req.isAuthenticated()) {
-        res.status(200).json({ user: req.user });
-    } else {
-        res.status(401).json({ message: "You don't have access" });
-    }
-});
+router.use('/profile', require('./profile'));
 
 module.exports = router;
