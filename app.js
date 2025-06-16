@@ -10,29 +10,17 @@ const isProduction = process.env.NODE_ENV === 'production';
 function createApp(sessionMiddleware) {
     const app = express();
     app
-    .use(bodyParser.json())
-    .use(sessionMiddleware)
-    .use(passport.initialize())
-    .use(passport.session())
-    .use((req, res, next) => {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader(
-            'Access-Control-Allow-Headers',
-            'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
-        );
-        res.setHeader(
-            'Access-Control-Allow-Methods',
-            'GET, POST, PUT, DELETE, OPTIONS'
-        );
-        next();
-    })
-    .use('/', require('./routes'))
     .use(cors({
         origin: isProduction
             ? 'https://cse341-teamproject-b6j0.onrender.com'
             : 'http://localhost:3000',
         credentials: true
-    }));
+    }))
+    .use(sessionMiddleware)
+    .use(passport.initialize())
+    .use(passport.session())
+    .use(bodyParser.json())
+    .use('/', require('./routes'));
     return app;
 }
 module.exports = createApp;
