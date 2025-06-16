@@ -30,31 +30,23 @@ const getMovie = async (req, res) => {
 };
 
 const createMovie = async (req, res) => {
-    //#swagger.tags = ['Movies']
-    //#swagger.description = 'Create a new movie'
     /*
-    #swagger.requestBody = {
+    #swagger.tags = ['Movies']
+    #swagger.description = 'Create a new movie'
+    #swagger.parameters['body'] = {
+        in: 'body',
         required: true,
-        content: {
-            "application/json": {
-                schema: {
-                    type: "object",
-                    properties: {
-                        name: { type: "string" },
-                        director: { type: "string" },
-                        year: { type: "number" },
-                        duration: { type: "number" },
-                        description: { type: "string" },
-                        cast: {
-                            type: "array",
-                            items: { type: "string" },
-                            example: ["Actor 1", "Actor 2", "Actor 3"]
-                        },
-                        category: { type: "string" }
-                    },
-                    required: ["name", "director", "year", "duration", "description", "cast", "category"]
-                }
-            }
+        schema: { 
+            name: 'Inception',
+            director: 'Christopher Nolan',
+            year: 2010,
+            review: 'A mind-bending thriller that blurs the line between reality and dreams.',
+            duration: 148,
+            cast: ['Leonardo DiCaprio', 'Joseph Gordon-Levitt', 'Elliot Page'],
+            genre: 'Science Fiction',
+            rating: 8.8,
+            category: 'Action',
+            description: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.'
         }
     }
     */
@@ -72,31 +64,23 @@ const createMovie = async (req, res) => {
 };
 
 const updateMovie = async (req, res) => {
-    //#swagger.tags = ['Movies']
-    //#swagger.description = 'Update an existing movie'
-    //#swagger.parameters['id'] = { description: 'Movie ID', in: 'path', required: true }
     /*
-    #swagger.requestBody = {
+    #swagger.tags = ['Movies']
+    #swagger.description = 'Update a movie by ID'
+    #swagger.parameters['body'] = {
+        in: 'body',
         required: true,
-        content: {
-            "application/json": {
-                schema: {
-                    type: "object",
-                    properties: {
-                        name: { type: "string" },
-                        director: { type: "string" },
-                        year: { type: "number" },
-                        duration: { type: "number" },
-                        description: { type: "string" },
-                        cast: {
-                            type: "array",
-                            items: { type: "string" }
-                        },
-                        category: { type: "string" }
-                    },
-                    required: ["name", "director", "year", "duration", "description", "cast", "category"]
-                }
-            }
+        schema: { 
+            name: 'Madagascar',
+            director: 'Eric Darnell',
+            year: 2005,
+            review: 'An animated comedy that follows a group of zoo animals who find themselves stranded on the island of Madagascar.',
+            duration: 86,
+            cast: ['Ben Stiller', 'Chris Rock', 'David Schwimmer'],
+            genre: 'Animation',
+            rating: 6.9,
+            category: 'Comedy',
+            description: 'When their ship crashes on the island of Madagascar, a group of zoo animals must learn to survive in the wild.'
         }
     }
     */

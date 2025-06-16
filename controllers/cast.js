@@ -1,6 +1,20 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
+
+const getAllCast = async (req, res) => {
+    /*
+    #swagger.tags = ['Cast']
+    #swagger.description = 'Get all cast'
+    */
+    try {
+        const result = await mongodb.getDatabase().db().collection('cast').find();
+        result.toArray().then((cast) => res.status(200).json(cast));
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
 const getCast = async (req, res) => {
     /*
     #swagger.tags = ['Cast']
@@ -88,6 +102,7 @@ const deleteCast = async (req, res) => {
 };
 
 module.exports = {
+    getAllCast,
     getCast,
     createCast,
     updateCast,

@@ -12,29 +12,6 @@
     "host"
   ],
   "paths": {
-    "/profile": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/movies/": {
       "get": {
         "tags": [
@@ -55,6 +32,65 @@
           "Movies"
         ],
         "description": "Create a new movie",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Inception"
+                },
+                "director": {
+                  "type": "string",
+                  "example": "Christopher Nolan"
+                },
+                "year": {
+                  "type": "number",
+                  "example": 2010
+                },
+                "review": {
+                  "type": "string",
+                  "example": "A mind-bending thriller that blurs the line between reality and dreams."
+                },
+                "duration": {
+                  "type": "number",
+                  "example": 148
+                },
+                "cast": {
+                  "type": "array",
+                  "example": [
+                    "Leonardo DiCaprio",
+                    "Joseph Gordon-Levitt",
+                    "Elliot Page"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "genre": {
+                  "type": "string",
+                  "example": "Science Fiction"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 8.8
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Action"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO."
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -67,56 +103,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "director": {
-                    "type": "string"
-                  },
-                  "year": {
-                    "type": "number"
-                  },
-                  "duration": {
-                    "type": "number"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "cast": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "Actor 1",
-                      "Actor 2",
-                      "Actor 3"
-                    ]
-                  },
-                  "category": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name",
-                  "director",
-                  "year",
-                  "duration",
-                  "description",
-                  "cast",
-                  "category"
-                ]
-              }
-            }
           }
         }
       }
@@ -149,14 +135,70 @@
         "tags": [
           "Movies"
         ],
-        "description": "Update an existing movie",
+        "description": "Update a movie by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Movie ID"
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Madagascar"
+                },
+                "director": {
+                  "type": "string",
+                  "example": "Eric Darnell"
+                },
+                "year": {
+                  "type": "number",
+                  "example": 2005
+                },
+                "review": {
+                  "type": "string",
+                  "example": "An animated comedy that follows a group of zoo animals who find themselves stranded on the island of Madagascar."
+                },
+                "duration": {
+                  "type": "number",
+                  "example": 86
+                },
+                "cast": {
+                  "type": "array",
+                  "example": [
+                    "Ben Stiller",
+                    "Chris Rock",
+                    "David Schwimmer"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "genre": {
+                  "type": "string",
+                  "example": "Animation"
+                },
+                "rating": {
+                  "type": "number",
+                  "example": 6.9
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Comedy"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "When their ship crashes on the island of Madagascar, a group of zoo animals must learn to survive in the wild."
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -174,51 +216,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "director": {
-                    "type": "string"
-                  },
-                  "year": {
-                    "type": "number"
-                  },
-                  "duration": {
-                    "type": "number"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "cast": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
-                  },
-                  "category": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name",
-                  "director",
-                  "year",
-                  "duration",
-                  "description",
-                  "cast",
-                  "category"
-                ]
-              }
-            }
           }
         }
       },
@@ -571,15 +568,7 @@
         "tags": [
           "Cast"
         ],
-        "description": "Get a cast by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "description": "Get all cast",
         "responses": {
           "200": {
             "description": "OK"
@@ -735,36 +724,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/google": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/google/callback": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
           }
         }
       }
