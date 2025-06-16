@@ -1,18 +1,34 @@
 require('dotenv').config();
-const mongodb = require('../data/database');
+const request = require('supertest');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const createApp = require('../app');
+const db = require('../data/database');
+require('../auth/passport');
+
+let app;
+
+beforeAll((done) => {
+  db.initDb((err) => {
+    if (err) return done(err);
+
+    const dbClient = db.getDatabase();
+    const sessionMiddleware = session({
+      secret: process.env.SESSION_SECRET || 'test_secret',
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({ client: dbClient }),
+      cookie: { secure: false }
+    });
+
+    app = createApp(sessionMiddleware);
+    done();
+  });
+});
 
 describe('DB connection', () => {
-    beforeAll((done) => {
-        mongodb.initDb((err, db) => {
-            if (err) {
-                done(err);
-            } else {
-                done();
-            }
-        });
-    });
     it('Get connection', () => {
-        const db = mongodb.getDatabase();
-        expect(db).not.toBeNull();
+        const mongodb = db.getDatabase();
+        expect(mongodb).not.toBeNull();
     });
 });

@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongodb = require('./data/database');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
-const createApp = require('./app');
+
 
 const port = process.env.PORT || 3000;
 const isProduction = process.env.NODE_ENV === 'production';
@@ -13,6 +13,8 @@ mongodb.initDb((err) => {
         return;
     } 
     const dbClient = mongodb.getDatabase();
+    require('./auth/passport');
+
     const sessionMiddleware = session({
         secret: process.env.SESSION_SECRET || 'wysiwyg',
         resave: false,
@@ -20,9 +22,10 @@ mongodb.initDb((err) => {
         store: MongoStore.create({ client: dbClient }),
         cookie: {
             secure: isProduction,
-            sameSite: isProduction ? 'None' : 'lax'
+            sameSite: isProduction ? 'none' : 'lax'
         }
     });
+    const createApp = require('./app');
     const app = createApp(sessionMiddleware);
     app.listen(port, () => {
         console.log(`🚀 Server running on port ${port}`);
