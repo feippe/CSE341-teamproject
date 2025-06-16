@@ -4,12 +4,19 @@ const mongodb = require('../data/database');
 const { ObjectId } = require('mongodb');
 
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    done(null, user._id.toString());
 });
 
 passport.deserializeUser(async (id, done) => {
-    const user = await mongodb.getDatabase().db().collection('users').findOne({ _id: new ObjectId(id) });
-    done(null, user);
+    console.log('🔁 Deserializing user with ID:', id);
+    try {
+        const user = await mongodb.getDatabase().db().collection('users').findOne({ _id: new ObjectId(id) });
+        console.log('✅ Found user:', user);
+        done(null, user);
+    } catch (error) {
+        console.error('❌ Error deserializing user:', err);
+        done(error);
+    }
 });
 
 passport.use(new GoogleStrategy({

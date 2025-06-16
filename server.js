@@ -20,7 +20,7 @@ mongodb.initDb((err) => {
         store: MongoStore.create({ client: dbClient }),
         cookie: {
             secure: isProduction,
-            sameSite: isProduction ? 'none' : 'lax'
+            sameSite: isProduction ? 'None' : 'lax'
         }
     });
     const app = createApp(sessionMiddleware);
