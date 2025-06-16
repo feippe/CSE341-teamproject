@@ -14,7 +14,7 @@ router.use('/cast', require('./cast'));
 
 router.use('/auth', /* #swagger.ignore = true */ require('./auth'));
 
-router.get('/profile', (req, res) => {
+router.get('/profile', ensureAuth, (req, res) => {
     //#swagger.tags = ['Profile']
     //#swagger.ignore = true
     if (req.isAuthenticated()) {
