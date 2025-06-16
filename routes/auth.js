@@ -7,14 +7,14 @@ router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         //#swagger.ignore = true
-        res.redirect('/api-docs');
+        res.redirect('/profile');
     }
 );
 
 router.get('/logout', (req, res) => {
     req.logout(() => {
         //#swagger.ignore = true
-        res.redirect('/');
+        res.redirect('/profile');
     });
 });
 
