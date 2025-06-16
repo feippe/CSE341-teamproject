@@ -2,28 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const db = require('./data/database');
 
 require('dotenv').config();
 require('./auth/passport');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const app = express();
-
-app
+function createApp(sessionMiddleware) {
+    const app = express();
+    app
     .use(bodyParser.json())
-    .use(session({
-        secret: process.env.SESSION_SECRET || 'wysiwyg',
-        resave: false,
-        saveUninitialized: false,
-        store: MongoStore.create({ client: db.getDatabase() }),
-        cookie: {
-            secure: isProduction,
-            sameSite: isProduction ? 'none' : 'lax'
-        }
-    }))
+    .use(sessionMiddleware)
     .use(passport.initialize())
     .use(passport.session())
     .use((req, res, next) => {
@@ -45,5 +33,6 @@ app
             : 'http://localhost:3000',
         credentials: true
     }));
-
-module.exports = app;
+    return app;
+}
+module.exports = createApp;
