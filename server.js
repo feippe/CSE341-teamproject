@@ -1,64 +1,41 @@
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 
 const mongodb = require('./data/database');
-const express = require('express');
-const bodyParser = require('body-parser');
-
+const MongoStore = require('connect-mongo');
 const session = require('express-session');
 const passport = require('passport');
-const MongoStore = require('connect-mongo');
-const cors = require('cors');
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-const app = express();
-
+const app = require('./app');
 const port = process.env.PORT || 3000;
 
-require('./auth/passport.js');
+const isProduction = process.env.NODE_ENV === 'production';
 
 mongodb.initDb((err) => {
     if (err) {
         console.log(err);
     } else {
-        app.listen(port, () => { console.log(`Database is listening and node running on port ${port}`); });
-        app
-            .use(session({
-                secret: process.env.SESSION_SECRET || 'wysiwyg',
-                resave: false,
-                saveUninitialized: false,
-                store: MongoStore.create({ client: mongodb.getDatabase() }),
-                cookie: {
-                    secure: isProduction,
-                    sameSite: isProduction ? 'none' : 'lax'
-                }
-            }))
-            .use(passport.initialize())
-            .use(passport.session())
-            .use(bodyParser.json())
-            .use((req, res, next) => {
-                res.setHeader('Access-Control-Allow-Origin', '*');
-                res.setHeader(
-                    'Access-Control-Allow-Headers',
-                    'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
-                );
-                res.setHeader(
-                    'Access-Control-Allow-Methods',
-                    'GET, POST, PUT, DELETE, OPTIONS'
-                );
-                next();
-            })
-            .use('/', require('./routes'))
-            .use(cors({
-                origin: isProduction
-                    ? 'https://cse341-teamproject-b6j0.onrender.com'
-                    : 'http://localhost:3000',
-                credentials: true
-            }))
-            ;
+        const dbClient = mongodb.getDatabase();
+
+        app.use(session({
+            secret: process.env.SESSION_SECRET || 'wysiwyg',
+            resave: false,
+            saveUninitialized: false,
+            store: MongoStore.create({ client: dbClient }),
+            cookie: {
+                secure: isProduction,
+                sameSite: isProduction ? 'none' : 'lax'
+            }
+        }));
+
+        app.use(passport.initialize());
+        app.use(passport.session());
+
         if (isProduction) {
             app.enable('trust proxy');
         }
+
+        app.listen(port, () => {
+            console.log(`✅ Server running on port ${port}`);
+        });
     }
 });

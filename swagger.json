@@ -5,11 +5,11 @@
     "description": "W05 Project - Gabriel Feippe",
     "version": "1.0.0"
   },
-  "host": "cse341-teamproject-b6j0.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
     "https",
-    "host"
+    "http"
   ],
   "paths": {
     "/movies/": {

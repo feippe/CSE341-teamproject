@@ -8,7 +8,8 @@ const doc = {
         description: 'W05 Project - Gabriel Feippe'
     },
     host:'cse341-teamproject-b6j0.onrender.com',
-    schemes: ['https', 'host']
+    //host: 'localhost:3000',
+    schemes: ['https', 'http']
 };
 
 const outputFile = './swagger.json';
