@@ -27,6 +27,7 @@ mongodb.initDb((err) => {
     });
     const createApp = require('./app');
     const app = createApp(sessionMiddleware);
+    app.set('trust proxy', 1); 
     app.listen(port, () => {
         console.log(`🚀 Server running on port ${port}`);
     });
